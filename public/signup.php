@@ -1,30 +1,46 @@
 <?php
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-use src\module\signup;
+use src\Validation\Validate;
 use src\controller\UserController;
 ob_start();
 session_start();
-// $db1 = getenv('test');
-// $db1 = $_ENV;
-// $db2= getenv('DB_NAME');
-// $bb = $_ENV['test'];
+
+function setSessionMessage()
+{
+  $_SESSION['msg'] = '<h4 id="messageText">Email is not in the correct format </h4>';
+}
+if (isset($_POST['register-user'])) {
+ $validatedInput = Validate::signup();
+  if (!$validatedInput['email']) {
+    $validatedInput['email'] = $_POST['email'];
+    $_SESSION['userData'] = json_encode($validatedInput);
+    setSessionMessage();
+  }
+  else{
+    $isCreated = UserController::signUp($validatedInput);
+    if($isCreated){
+      $_SESSION['msg'] = '<h4 id="messageText">Welcome to Signer, please provide your details to login</h4>';
+     return header('location: signin.php');
+    }
+  };
+}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 <title>Signer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" shrink-to-fit="no">
 <link href="css/main.css" rel="stylesheet" />
 <link href="css/normalize.css" rel="stylesheet" />
 </head>
 <body>
     <nav role="navigation" class="navContainer">
         <ul class="nav navItem navStart">
-            <li><a href="index.html">Signer</a></li>
+            <li><a href="index.php">Signer</a></li>
         </ul>
         <ul class="nav navContainer navEnd">
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.php">Home</a></li>
             <li><a href="#"></a></li>
             <li><a href="signin.php">Sign in</a></li>
         </ul>
@@ -44,7 +60,7 @@ session_start();
             }
 
           ?>
-    <form id="signup-form" method="POST" action="<?php signup::signup(); ?>" actioffn="../src/controller/UserController.php"  actffion="http://localhost:8000/src/controller/UserController.php">
+    <form id="signup-form" method="POST" action="signup.php">
       <ul class="flex-outer">
           <p id = "messageText" ></p>
         <li>

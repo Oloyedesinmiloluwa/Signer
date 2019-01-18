@@ -1,22 +1,45 @@
 <?php
 require_once dirname(__DIR__) . '/vendor/autoload.php';
-use src\module\signup;
+use src\Validation\Validate;
 use src\controller\UserController;
 ob_start();
 session_start();
+
+if(isset($_POST['login-user'])){
+  $validatedInput = Validate::signin();
+  if (!$validatedInput['email']) {
+    $_SESSION['msg'] = '<h4 id="messageText">Email is not in the correct format </h4>';
+  } else {
+    $fetchedData = UserController::signIn($validatedInput);
+    if($fetchedData){
+      unset($fetchedData['password']);
+      $_SESSION['userData'] = json_encode($fetchedData);
+      header('location: users.php');
+    } else {
+      $_SESSION['msg']='<h4 id="messageText">Email address and password do not match any account</h4>';
+    };
+  };
+}
+
+if (isset($_POST['reset-email'])) {
+  UserController::sendEmail()? $_SESSION['msg']= '<h4 id="messageText">Email sent please follow the link in the email to reset password</h4>'
+  : $_SESSION['msg']= '<h4 id="messageText">Email address does not exist</h4>';
+
+};
+
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 <title>Signer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" shrink-to-fit="no">
 <link href="css/main.css" rel="stylesheet" />
 <link href="css/normalize.css" rel="stylesheet" />
 </head>
 <body>
     <nav role="navigation" class="navContainer">
         <ul class="nav navItem navStart">
-            <li><a href="index.html">M-Tracker</a></li>
+            <li><a href="index.html">Signer</a></li>
         </ul>
         <ul class="nav navContainer navEnd">
             <li><a href="index.html">Home</a></li>
@@ -33,7 +56,7 @@ session_start();
             unset($_SESSION['msg']);
           ?>
 <div class="container">
-<form method="POST" action="<?php signup::signIn() ?>" baction="../src/controller/UserController.php">
+<form method="POST" action="signin.php" >
       <ul class="flex-outer">
           <p id = "messageText" ></p>
         <li>
@@ -60,7 +83,7 @@ session_start();
             <h4>Password Recovery</h4> 
       <p>Provide the email address you registered with</p>
           <div class="email-container">
-            <form method="POST" action="<?php UserController::sendEmail() ?>">
+            <form method="POST" action="signin.php">
              &nbsp;<i class="fa fa-user"></i>&nbsp; <input type="email" name="reset-email" id="modal-email" placeholder="Email" autofocus>
           </div>
           <p class="text-center"><small> We will send you a link to reset your password</small></p>
@@ -69,7 +92,7 @@ session_start();
         </form>
       </div>
     </div>
-    <p class="text-center">All rights reserved. M-tracker &copy;2018</p>
+    <p class="text-center">All rights reserved. Signer &copy;2018</p>
     <script>
       const forgotPassword = document.getElementById('forgot-pswd');
       const modal = document.getElementsByClassName('modal')[0];

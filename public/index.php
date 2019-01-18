@@ -21,7 +21,7 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 <meta http-equiv="refresh" content="0;url=signup.php">
 <title>Virtualines</title>
 <script language="javascript">
-    window.location.href = "signup.php"
+    window.location.href = "signup.php";
 </script>
 </head>
 <body>

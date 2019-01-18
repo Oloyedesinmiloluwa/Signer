@@ -3,6 +3,12 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 use src\controller\UserController;
 ob_start();
 session_start();
+
+if (!isset($_SESSION['userData'])) {
+  $_SESSION['msg'] = '<h4 id="messageText">You have to login to proceed! It is pretty easy</h4>';
+  header('location: signin.php');
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,15 +30,16 @@ session_start();
       </ul>
       <ul class="nav navContainer navEnd">
         <li>
-          <a href="index.php">Home</a>
+          <a href="countries.php">Countries</a>
         </li>
         <li>
-          <a href="signin.php">Sign Out</a>
+          <a href="signout.php">Sign Out</a>
         </li>
       </ul>
     </nav>
   <?php
-  UserController::fetchAllUser();
+  $users =UserController::fetchAllUser();
+  $_SESSION['usersData']=$users;
   ?>
   <h2 id="request-header" class="text-center">Welcome <?php if(isset($_SESSION['userData'])) echo(json_decode($_SESSION['userData'], true))['firstName'] ?></h2>
   <p class="text-center">Here are all the list of users in this application</p>
@@ -65,5 +72,6 @@ session_start();
       ?>
     </tbody>
   </table>
+
 </body>
 </html>

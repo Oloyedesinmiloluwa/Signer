@@ -11,6 +11,7 @@
 #messageText {
   color: red;
   text-align: center;
+  /* text-shadow: antiquewhite -2px 1px 2px; */
 }
 #home-logo {
   text-shadow: 4px 4px 8px rgb(46, 139, 216);
@@ -23,6 +24,24 @@
 button.delete-btn:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
+.country select {
+  margin-left: 5px;
+}
+ul.country {
+  display: flex;
+  /*flex-direction: column;*/
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 200px;
+}
+.country li {
+  display: flex;
+  /*flex-wrap: wrap;*/
+  /*justify-content: center;*/
+    margin: 5px;
+  margin-right: 50px;
+
+}
 #filter-by {
   margin: 0 3%;
   display: flex;
@@ -33,6 +52,15 @@ button.delete-btn:hover {
   background: white;
   border:solid  #0B2240 6px;
   border-radius: 5px;
+}
+select {
+  color:#15437F;
+  background: white;
+  border:solid  #0B2240 1px;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-right: auto;
+  max-width: 220px;
 }
 .welcome-div {
   height: 500px;
@@ -133,7 +161,7 @@ text-decoration: none;
   color: white;
   border: solid 2px slateblue;
   padding: 1px 5px;
-  visibility: hidden;
+  visibility: visible;
   margin: 8px 3px;
   border-radius: 10px;
 }
@@ -183,7 +211,7 @@ body {
   box-sizing: border-box;
 }
 #page-num {
-  margin-top: 20%;
+  margin-top: 5%;
   font-weight: bold;
   color: tomato;
 }
@@ -234,6 +262,10 @@ body {
   color: white;
   font-size: 110%;
 }
+ul.modal-display {
+  max-height: 300px;
+  overflow: auto;
+}
 .modal{
   position: fixed;
   background-color: rgb(0, 0, 0, 0.4);
@@ -252,6 +284,7 @@ padding: 5%;
 padding-top: 0;
 width: 40%;
 min-width: 300px;
+/* max-height: 400px; */
 margin: 0 auto;
 border-radius: 9px;
 }
@@ -679,12 +712,12 @@ padding-bottom: 1%;
 .underline {
   text-decoration: underline;
 }
-button.delete-btn {
+button.delete-btn, button.display-state {
   background: #15437F;
   color: white;
   padding: 5px;
 }
-button.delete-btn:hover{
+button.delete-btn:hover, button.display-state:hover{
   /* box-shadow: #0B2240 5px 0px 4px 4px; */
   /* width: 80%; */
   /* background-color: white !important; */
