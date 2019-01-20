@@ -8,7 +8,16 @@ if (!isset($_SESSION['userData'])) {
   $_SESSION['msg'] = '<h4 id="messageText">You have to login to proceed! It is pretty easy</h4>';
   header('location: signin.php');
 }
-
+if (isset($_POST['reset-password-btn'])) {
+ if($_POST['confirm-password'] === $_POST['new-password']) {
+  $email = json_decode($_SESSION['userData'], true)['email'];
+  $response = UserController::resetPassword($_POST, $email);
+  $_SESSION['msg'] =   $response? '<h4>Password has been updated</h4>' : '<h4 class="red-text">Password could not be reset, try again</h4>';
+} else
+    {
+      $_SESSION['msg'] =  '<h4 class="red-text">Password should match</h4>';
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -65,13 +74,38 @@ if (!isset($_SESSION['userData'])) {
            <form name="<?php echo $user->id?>" method="POST" action="<?php UserController::deleteUser($user->id)?>">
            <button class="delete-btn" name="<?php echo "delete-user-$user->id"?>" type="submit">Delete</button>
            </form>
-         <!-- <a href="">delete</a></td> -->
        </tr>
       <?php }
       };
       ?>
     </tbody>
   </table>
-
+  <div class="reset-password-wrapper">
+  <p>Click here to reset your password</p>
+  <?php
+            if(isset($_SESSION['msg']))echo($_SESSION['msg']);
+            unset($_SESSION['msg']);
+          ?>
+  <form method="POST" action="">
+    <ul class="flex-outer-new" id="password-reset-form">
+      <li>
+    <label for="old-password">Old Password:</label>
+    <input name="old-password" type="password" placeholder="Old password" />
+  </li>
+  <li>
+    <label for="new-password">New Password: </label>
+    <input name="new-password" type="password" placeholder="New password" />
+  </li>
+  <li>
+    <label for="confirm-password">Confirm Password:</label>
+    <input name="confirm-password" type="password" placeholder="Confirm password" />
+  </li>
+  <li> 
+ <button name="reset-password-btn">Reset Password</button>
+ <li>
+  </ul>
+  </form>
+</div>
+  
 </body>
 </html>

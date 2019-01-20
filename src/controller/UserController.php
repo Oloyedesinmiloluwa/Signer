@@ -5,6 +5,17 @@ use PDO;
 
 class UserController
 {
+  public static function resetPassword($post, $email)
+  {
+    $query = 'UPDATE user set password=:password WHERE email=:email AND password=:oldPassword';
+    $db = new Database();
+    $db->prepare($query);
+    $db->stmt->bindValue(':email', $email, PDO::PARAM_STR);
+    $db->stmt->bindValue(':password', md5($post['new-password']), PDO::PARAM_STR);
+    $db->stmt->bindValue(':oldPassword', md5($post['old-password']), PDO::PARAM_STR);
+    $db->stmt->execute();
+    return $db->stmt->rowCount();
+  }
   public static function sendEmail()
   {
     $query= 'SELECT * FROM user WHERE email=:email';

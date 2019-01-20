@@ -53,7 +53,6 @@ if (isset($_POST['register-user'])) {
           <?php
             if(isset($_SESSION['msg']))echo($_SESSION['msg']);
             unset($_SESSION['msg']);
-            // $inputData=['firstName' => '', 'lastName' => '', 'email' => ''];
             if(isset($_SESSION['userData'])) {
               $inputData = json_decode($_SESSION['userData'],true);
               unset($_SESSION['userData']);
@@ -73,7 +72,7 @@ if (isset($_POST['register-user'])) {
         </li>
         <li>
           <label for="email">Email<span class="red-text">*</span></label>
-          <input type="email****" id="email" value="<?php echo isset($inputData)?$inputData['email']:null ?>" name="email" placeholder="Email">
+          <input type="email" id="email" value="<?php echo isset($inputData)?$inputData['email']:null ?>" name="email" placeholder="Email">
         </li>
         <li>
           <label for="password">Password<span class="red-text">*</span></label>

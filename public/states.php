@@ -1,7 +1,6 @@
 <?php
 require_once dirname(__DIR__) . '/vendor/autoload.php';
-use src\controller\UserController;
-use src\Helpers;
+
 ob_start();
 session_start();
 
@@ -28,7 +27,7 @@ if (!isset($_SESSION['userData'])) {
       </ul>
       <ul class="nav navContainer navEnd">
         <li>
-          <a href="users.php">Users</a>
+          <a href="countries.php">Countries</a>
         </li>
         <li>
           <a href="signout.php">Sign Out</a>
@@ -36,8 +35,7 @@ if (!isset($_SESSION['userData'])) {
       </ul>
     </nav>
 
-<h2 id="request-header" class="text-center">List of all Countries</h2>
-<p class="text-center">We think you will find your country here. Check out to see if we are right</p>
+<h2 id="request-header" class="text-center">List of States in</h2>
 
   <?php
   $url = 'http://services.groupkt.com/country/get/all';

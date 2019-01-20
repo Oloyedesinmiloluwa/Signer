@@ -9,7 +9,6 @@ class Helpers
   }
   public static function fetchFromApi($url)
   {
-    // $url = 'http://services.groupkt.com/country/get/all';
     $ch = curl_init();
     curl_setopt($ch,CURLOPT_URL,$url);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);

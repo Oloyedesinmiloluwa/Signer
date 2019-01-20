@@ -61,11 +61,11 @@ if (isset($_POST['reset-email'])) {
           <p id = "messageText" ></p>
         <li>
           <label for="email">Email<span class="red-text">*</span></label>
-          <input type="email"  name="email" id="email" placeholder="Email">
+          <input type="email"  name="email" id="email" placeholder="Email" required>
         </li>
         <li>
           <label for="password">Password<span class="red-text">*</span></label>
-          <input type="password" name="password" id="password" placeholder="Password">
+          <input type="password" name="password" id="password" placeholder="Password" required>
         </li>
         <li>
           <a href="" id="forgot-pswd"> Forgot your password ?</a>
@@ -103,7 +103,6 @@ if (isset($_POST['reset-email'])) {
 const closeBtn = document.querySelector('.close');
 closeBtn.addEventListener('click', () => {
   modal.style.display = 'none';
-  // modalMessageText.textContent = '';
 });
       </script>
 </body>
