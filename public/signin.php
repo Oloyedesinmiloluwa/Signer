@@ -39,10 +39,10 @@ if (isset($_POST['reset-email'])) {
 <body>
     <nav role="navigation" class="navContainer">
         <ul class="nav navItem navStart">
-            <li><a href="index.html">Signer</a></li>
+            <li><a href="index.php">Signer</a></li>
         </ul>
         <ul class="nav navContainer navEnd">
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.php">Home</a></li>
             <li><a href="#"></a></li>
             <li><a href="signup.php">Sign up</a></li>
         </ul>

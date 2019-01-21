@@ -24,6 +24,9 @@
 button.delete-btn:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
+.hr {
+  color:#15437F;
+}
 .country select {
   margin-left: 5px;
 }
@@ -372,6 +375,7 @@ border-radius: 9px;
   color: tomato;
 }
 #forgot-pswd {
+  display: none;
   color: tomato;
   margin-left: auto;
   margin-right: 12%;
@@ -758,7 +762,7 @@ table {
   justify-content: center;
   margin: 5% 3%;
   margin-top: 2%;
-  padding-bottom: 3%;
+  /* padding-bottom: 3%; */
   overflow: auto;
 }
 td {
@@ -774,6 +778,9 @@ th {
   padding-right: 4px;
   padding-left: 4px;
 }
+tr:hover {
+  background-color: hsl(215, 66%, 89%);
+}
 tr {
   text-align: center;
 }
@@ -784,10 +791,10 @@ td:first-letter {
   text-transform: uppercase;
 }
 tr th:nth-child(1) {
-  width: 15%;
+  width: 10%;
 }
 tr th:nth-child(2) {
-  width: 10%;
+  width: 20%;
 }
 tr td:nth-child(1) {
   white-space: nowrap;
@@ -802,14 +809,14 @@ tr td:nth-child(4) {
   white-space: nowrap;
 }
 tr th:nth-child(3) {
-  width: 10%;
+  width: 20%;
   padding: 0 5px;
 }
 tr th:nth-child(4) {
-  width: 15%;
+    width: 30%;
 }
 tr th:nth-child(5) {
-  width: 10%;
+  width: 20%;
 }
 table a:hover {
 color: red;

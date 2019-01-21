@@ -35,61 +35,26 @@ if (!isset($_SESSION['userData'])) {
       </ul>
     </nav>
 
-<h2 id="request-header" class="text-center">List of States in</h2>
-
-  <?php
-  $url = 'http://services.groupkt.com/country/get/all';
-  if($countries = Helpers::fetchFromApi($url)){
-  $_SESSION['countries'] = $countries['RestResponse']['result'];
-  }
-  ?>
-
-<table class="table-center">
-    <thead>
-      <th>Code</th>
-      <th>Country Name</th>
-      <th>Action</th>
-    </thead>
-    <tbody>
-      <?php
-      if(isset($_SESSION['countries'])){
-        $countries = $_SESSION['countries'];
-        if(count($countries) >= 50){
-          $countries = array_slice($countries,0,50);
-        }
-       foreach($countries as $country){?>
-       <tr>
-         <td><?php echo($country['alpha3_code']) ?></td>
-         <td><?php echo($country['name']) ?></td>
-         <td>
-         	<button class="display-state" id="display-state"  name="<?php echo "{$country['alpha3_code']}"?>" type="submit">View States</button>
-       </tr>
-      <?php }
-      };
-      ?>
-    </tbody>
-  </table>
-  <p class="text-center" id="page-num"></p>
-    <div class="pagination">
-      <button disabled id="prev-btn"><i class="fa fa-arrow-circle-left"></i> Prev</button>
-      <button id="next-btn" data-offset="0" data-paginate-count="0">Next <i class="fa fa-arrow-circle-right"></i> </button>
-    </div>
-  <div class="modal">
-        <div class="modal-content clearfix">
-            <div class="close">&times;</div>
-            <h4>States in selected Country</h4>
+<h2 id="request-header" class="text-center">List of States</h2>
+<div class="modal-content clearfix">
+            <h4>States in <?php echo isset($_GET['name'])? $_GET['name'] : 'Selected Country' ?></h4>
             <p>These are all the states in this country</p>
            <div class="email-container">
           <ul class="modal-display">
             Please wait...
           </ul>
-            <form method="POST" action="">
+            <form method="POST" action="countries.php">
           </div>
-              <button id="modal-btn" type="submit">Close</button>
+              <button id="modal-btn" type="submit">Go back</button>
             </form>
       </div>
+  <p class="text-center" id="page-num"></p>
+    <div class="pagination">
+      <button disabled id="prev-btn"><i class="fa fa-arrow-circle-left"></i> Prev</button>
+      <button id="next-btn">Next <i class="fa fa-arrow-circle-right"></i> </button>
     </div>
     <p class="text-center">All rights reserved. Signer &copy;2018</p>
-    <script src="countries.js"></script>
+    <script src="states.js"></script>
+    <script src="pagination.js"></script>
 </body>
 </html>

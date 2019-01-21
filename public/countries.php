@@ -48,6 +48,7 @@ if (!isset($_SESSION['userData'])) {
 
 <table class="table-center">
     <thead>
+      <th>S/N</th>
       <th>Code</th>
       <th>Country Name</th>
       <th>Action</th>
@@ -59,12 +60,14 @@ if (!isset($_SESSION['userData'])) {
         if(count($countries) >= 50){
           $countries = array_slice($countries,0,50);
         }
-       foreach($countries as $country){?>
+       foreach($countries as $index => $country){?>
        <tr>
+       	 <td><?php echo($index + 1) ?></td>
          <td><?php echo($country['alpha3_code']) ?></td>
          <td><?php echo($country['name']) ?></td>
          <td>
-         	<button class="display-state" id="display-state"  name="<?php echo "{$country['alpha3_code']}"?>" type="submit">View States</button>
+         	<button id="<?php echo "{$country['alpha3_code']}" ?>" class="display-state" name="<?php  echo "{$country['name']}"?>" type="submit">View States</button>
+     </td>
        </tr>
       <?php }
       };
@@ -76,22 +79,8 @@ if (!isset($_SESSION['userData'])) {
       <button disabled id="prev-btn"><i class="fa fa-arrow-circle-left"></i> Prev</button>
       <button id="next-btn" data-offset="0" data-paginate-count="0">Next <i class="fa fa-arrow-circle-right"></i> </button>
     </div>
-  <div class="modal">
-        <div class="modal-content clearfix">
-            <div class="close">&times;</div>
-            <h4>States in selected Country</h4>
-            <p>These are all the states in this country</p>
-           <div class="email-container">
-          <ul class="modal-display">
-            Please wait...
-          </ul>
-            <form method="POST" action="">
-          </div>
-              <button id="modal-btn" type="submit">Close</button>
-            </form>
-      </div>
-    </div>
     <p class="text-center">All rights reserved. Signer &copy;2018</p>
     <script src="countries.js"></script>
+    <script src="pagination.js"></script>
 </body>
 </html>

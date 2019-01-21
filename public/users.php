@@ -58,6 +58,7 @@ if (isset($_POST['reset-password-btn'])) {
       <th>First Name</th>
       <th>Last Name</th>
       <th>Email</th>
+      <th>Status</th>
       <th>Action</th>
     </thead>
     <tbody>
@@ -70,9 +71,10 @@ if (isset($_POST['reset-password-btn'])) {
          <td><?php echo($user->firstName) ?></td>
          <td><?php echo($user->lastName) ?></td>
          <td><?php echo($user->email) ?></td>
+         <td><?php echo($user->status ? 'Enabled': 'Disabled') ?></td>
          <td>
-           <form name="<?php echo $user->id?>" method="POST" action="<?php UserController::deleteUser($user->id)?>">
-           <button class="delete-btn" name="<?php echo "delete-user-$user->id"?>" type="submit">Delete</button>
+           <form name="<?php echo $user->id?>" method="POST" action="<?php UserController::updateStatus($user->id, !$user->status)?>">
+           <button class="delete-btn" name="<?php echo "delete-user-$user->id"?>" type="submit"><?php echo($user->status ? 'Disable': 'Enable') ?></button>
            </form>
        </tr>
       <?php }
@@ -80,8 +82,9 @@ if (isset($_POST['reset-password-btn'])) {
       ?>
     </tbody>
   </table>
+  <div class="hr"></div>
   <div class="reset-password-wrapper">
-  <p>Click here to reset your password</p>
+  <h2>Reset your password</h2>
   <?php
             if(isset($_SESSION['msg']))echo($_SESSION['msg']);
             unset($_SESSION['msg']);

@@ -29,13 +29,15 @@ class UserController
     }
     else return false;
   }
-  public static function deleteUser($id=null)
+  public static function updateStatus($id=null, $status=null)
   {
     if(!isset($_POST["delete-user-$id"])) return;
-    $query= 'DELETE FROM user WHERE id=:id';
+    $statusToInt = (int) $status;
+    $query= 'UPDATE user set status=:status WHERE id=:id';
     $db= new Database();
     $db->prepare($query);
     $db->stmt->bindValue(':id', $id);
+    $db->stmt->bindValue(':status', (int) $statusToInt);
     $db->stmt->execute();
     $db->stmt->rowCount();
     header('location: users.php');
