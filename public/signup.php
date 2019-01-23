@@ -3,27 +3,27 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use src\Validation\Validate;
 use src\controller\UserController;
+
 ob_start();
 session_start();
 
 function setSessionMessage()
 {
-  $_SESSION['msg'] = '<h4 id="messageText">Email is not in the correct format </h4>';
+    $_SESSION['msg'] = '<h4 id="messageText">Email is not in the correct format </h4>';
 }
 if (isset($_POST['register-user'])) {
- $validatedInput = Validate::signup();
-  if (!$validatedInput['email']) {
-    $validatedInput['email'] = $_POST['email'];
-    $_SESSION['userData'] = json_encode($validatedInput);
-    setSessionMessage();
-  }
-  else{
-    $isCreated = UserController::signUp($validatedInput);
-    if($isCreated){
-      $_SESSION['msg'] = '<h4 id="messageText">Welcome to Signer, please provide your details to login</h4>';
-     return header('location: signin.php');
-    }
-  };
+    $validatedInput = Validate::signup();
+    if (!$validatedInput['email']) {
+        $validatedInput['email'] = $_POST['email'];
+        $_SESSION['userData'] = json_encode($validatedInput);
+        setSessionMessage();
+    } else {
+        $isCreated = UserController::signUp($validatedInput);
+        if ($isCreated) {
+            $_SESSION['msg'] = '<h4 id="messageText">Welcome to Signer, please provide your details to login</h4>';
+            return header('location: signin.php');
+        }
+    };
 }
 ?>
 <!DOCTYPE html>
@@ -50,33 +50,35 @@ if (isset($_POST['register-user'])) {
     <div class="form-container">
     <h3 class="text-center" id ="login-text">Create an account with us</h3>
 <div class="container">
-          <?php
-            if(isset($_SESSION['msg']))echo($_SESSION['msg']);
+            <?php
+            if (isset($_SESSION['msg'])) {
+                echo($_SESSION['msg']);
+            }
             unset($_SESSION['msg']);
-            if(isset($_SESSION['userData'])) {
-              $inputData = json_decode($_SESSION['userData'],true);
-              unset($_SESSION['userData']);
+            if (isset($_SESSION['userData'])) {
+                $inputData = json_decode($_SESSION['userData'], true);
+                unset($_SESSION['userData']);
             }
 
-          ?>
+            ?>
     <form id="signup-form" method="POST" action="signup.php">
       <ul class="flex-outer">
           <p id = "messageText" ></p>
         <li>
           <label for="first-name">First Name<span class="red-text">*</span></label>
-          <input type="text" id="first-name" value="<?php echo isset($inputData)?$inputData['firstName']:null ?>" name="firstName" placeholder="First name">
+          <input type="text" id="first-name" value="<?php echo isset($inputData)?$inputData['firstName']:null ?>" name="firstName" placeholder="First name" required>
         </li>
         <li>
           <label for="last-name">Last Name<span class="red-text">*</span></label>
-          <input type="text" name="lastName" value="<?php echo isset($inputData)?$inputData['lastName']:null ?>" id="last-name" placeholder="Last name">
+          <input type="text" name="lastName" value="<?php echo isset($inputData)?$inputData['lastName']:null ?>" id="last-name" placeholder="Last name" required>
         </li>
         <li>
           <label for="email">Email<span class="red-text">*</span></label>
-          <input type="email" id="email" value="<?php echo isset($inputData)?$inputData['email']:null ?>" name="email" placeholder="Email">
+          <input type="email" id="email" value="<?php echo isset($inputData)?$inputData['email']:null ?>" name="email" placeholder="Email" required>
         </li>
         <li>
           <label for="password">Password<span class="red-text">*</span></label>
-          <input type="password" id="password" name="password" placeholder="Password">
+          <input type="password" id="password" name="password" placeholder="Password" required>
         </li>
         <li>
           <button id="submitButton" name="register-user" type="submit">Sign up</button>

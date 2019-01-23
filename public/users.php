@@ -1,21 +1,21 @@
 <?php
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 use src\controller\UserController;
+
 ob_start();
 session_start();
 
 if (!isset($_SESSION['userData'])) {
-  $_SESSION['msg'] = '<h4 id="messageText">You have to login to proceed! It is pretty easy</h4>';
-  header('location: signin.php');
+    $_SESSION['msg'] = '<h4 id="messageText">You have to login to proceed! It is pretty easy</h4>';
+    header('location: signin.php');
 }
 if (isset($_POST['reset-password-btn'])) {
- if($_POST['confirm-password'] === $_POST['new-password']) {
-  $email = json_decode($_SESSION['userData'], true)['email'];
-  $response = UserController::resetPassword($_POST, $email);
-  $_SESSION['msg'] =   $response? '<h4>Password has been updated</h4>' : '<h4 class="red-text">Password could not be reset, try again</h4>';
-} else
-    {
-      $_SESSION['msg'] =  '<h4 class="red-text">Password should match</h4>';
+    if ($_POST['confirm-password'] === $_POST['new-password']) {
+        $email = json_decode($_SESSION['userData'], true)['email'];
+        $response = UserController::resetPassword($_POST, $email);
+        $_SESSION['msg'] =   $response? '<h4>Password has been updated</h4>' : '<h4 class="red-text">Password could not be reset, try again</h4>';
+    } else {
+        $_SESSION['msg'] =  '<h4 class="red-text">Password should match</h4>';
     }
 }
 ?>
@@ -46,11 +46,11 @@ if (isset($_POST['reset-password-btn'])) {
         </li>
       </ul>
     </nav>
-  <?php
-  $users =UserController::fetchAllUser();
-  $_SESSION['usersData']=$users;
-  ?>
-  <h2 id="request-header" class="text-center">Welcome <?php if(isset($_SESSION['userData'])) echo(json_decode($_SESSION['userData'], true))['firstName'] ?></h2>
+    <?php
+    $users = UserController::fetchAllUser();
+    $_SESSION['usersData']=$users;
+    ?>
+  <h2 id="request-header" class="text-center">Welcome <?php if (isset($_SESSION['userData'])) echo(json_decode($_SESSION['userData'], true))['firstName'] ?></h2>
   <p class="text-center">Here are all the list of users in this application</p>
   <table class="table-center">
     <thead>
@@ -62,10 +62,10 @@ if (isset($_POST['reset-password-btn'])) {
       <th>Action</th>
     </thead>
     <tbody>
-      <?php
-      if(isset($_SESSION['usersData'])){
-       $users= json_decode($_SESSION['usersData']);
-       foreach($users as $user){?>
+        <?php
+        if (isset($_SESSION['usersData'])) {
+            $users = json_decode($_SESSION['usersData']);
+            foreach ($users as $user) {?>
        <tr>
          <td><?php echo($user->id) ?></td>
          <td><?php echo($user->firstName) ?></td>
@@ -77,18 +77,20 @@ if (isset($_POST['reset-password-btn'])) {
            <button class="delete-btn" name="<?php echo "delete-user-$user->id"?>" type="submit"><?php echo($user->status ? 'Disable': 'Enable') ?></button>
            </form>
        </tr>
-      <?php }
-      };
-      ?>
+            <?php }
+        };
+        ?>
     </tbody>
   </table>
   <div class="hr"></div>
   <div class="reset-password-wrapper">
   <h2>Reset your password</h2>
-  <?php
-            if(isset($_SESSION['msg']))echo($_SESSION['msg']);
+    <?php
+    if (isset($_SESSION['msg'])) {
+                echo($_SESSION['msg']);
             unset($_SESSION['msg']);
-          ?>
+    }
+    ?>
   <form method="POST" action="">
     <ul class="flex-outer-new" id="password-reset-form">
       <li>
@@ -103,12 +105,11 @@ if (isset($_POST['reset-password-btn'])) {
     <label for="confirm-password">Confirm Password:</label>
     <input name="confirm-password" type="password" placeholder="Confirm password" />
   </li>
-  <li> 
+  <li>
  <button name="reset-password-btn">Reset Password</button>
  <li>
   </ul>
   </form>
 </div>
-  
 </body>
 </html>

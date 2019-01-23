@@ -1,9 +1,9 @@
 function paginationFunction(data, offset) {
-  let end;
+  let end ;
   if (data.length >= 50) {
     data = data.slice(offset, offset + 50);
-    end = data < 51 ? true : false;
   }
+  end = data.length < 50 ? true : false;
   return {data, end}
 }
 

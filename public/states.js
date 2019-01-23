@@ -7,8 +7,8 @@ let code;
 function displayState(states, offset = 0) {
   const {data, end} = paginationFunction(states, offset);
   let disp = '';
-  data.forEach(element => {
-    disp += `<li>${element.id}.    ${element.name}</li>`;
+  data.forEach((element,index) => {
+    disp += `<li>${index + offset + 1}.    ${element.name}</li>`;
   });
   return {disp, end};
 }
@@ -24,11 +24,11 @@ function ajaxCall() {
         return;
       }
      const {disp, end} = displayState(data.RestResponse.result, offset);
-     if (end) {
-      $('#next-btn').prop('disabled', true);
-      return;
-    }
       $('ul.modal-display').html(disp);
+      if (end) {
+        $('#next-btn').prop('disabled', true);
+        return;
+      }
     },
     error: function (error) {
       $('ul.modal-display').text(`Error fetching data`);

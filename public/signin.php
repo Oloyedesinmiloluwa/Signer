@@ -2,29 +2,29 @@
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 use src\Validation\Validate;
 use src\controller\UserController;
+
 ob_start();
 session_start();
 
-if(isset($_POST['login-user'])){
-  $validatedInput = Validate::signin();
-  if (!$validatedInput['email']) {
-    $_SESSION['msg'] = '<h4 id="messageText">Email is not in the correct format </h4>';
-  } else {
-    $fetchedData = UserController::signIn($validatedInput);
-    if($fetchedData){
-      unset($fetchedData['password']);
-      $_SESSION['userData'] = json_encode($fetchedData);
-      header('location: users.php');
+if (isset($_POST['login-user'])) {
+    $validatedInput = Validate::signin();
+    if (!$validatedInput['email']) {
+        $_SESSION['msg'] = '<h4 id="messageText">Email is not in the correct format </h4>';
     } else {
-      $_SESSION['msg']='<h4 id="messageText">Email address and password do not match any account</h4>';
+        $fetchedData = UserController::signIn($validatedInput);
+        if ($fetchedData) {
+            unset($fetchedData['password']);
+            $_SESSION['userData'] = json_encode($fetchedData);
+            header('location: users.php');
+        } else {
+            $_SESSION['msg']='<h4 id="messageText">Email address and password do not match any account</h4>';
+        };
     };
-  };
 }
 
 if (isset($_POST['reset-email'])) {
-  UserController::sendEmail()? $_SESSION['msg']= '<h4 id="messageText">Email sent please follow the link in the email to reset password</h4>'
-  : $_SESSION['msg']= '<h4 id="messageText">Email address does not exist</h4>';
-
+    UserController::sendEmail()? $_SESSION['msg']= '<h4 id="messageText">Email sent please follow the link in the email to reset password</h4>'
+    : $_SESSION['msg']= '<h4 id="messageText">Email address does not exist</h4>';
 };
 
 ?>
@@ -52,9 +52,11 @@ if (isset($_POST['reset-email'])) {
     <div class="form-container">
     <h3 class="text-center" id ="login-text">Provide your login details</h3>
     <?php
-            if(isset($_SESSION['msg']))echo($_SESSION['msg']);
+    if (isset($_SESSION['msg'])) {
+        echo($_SESSION['msg']);
+    }
             unset($_SESSION['msg']);
-          ?>
+    ?>
 <div class="container">
 <form method="POST" action="signin.php" >
       <ul class="flex-outer">

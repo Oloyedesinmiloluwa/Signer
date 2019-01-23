@@ -8,7 +8,7 @@ function loadTable(countries, offset = 0) {
   let displayContent = '';
   data.forEach((country,index) => {
     displayContent += `<tr>
-         <td>${index+offset+1}</td>
+         <td>${index + offset + 1}</td>
          <td>${country['alpha3_code']}</td>
          <td>${country['name']}</td>
          <td>
@@ -37,11 +37,11 @@ function ajaxCall() {
     dataType: 'json',
     success: function (data) {
       const { end, displayContent } = loadTable(data.RestResponse.result, offset);
+      $('tbody').html(displayContent);
       if (end) {
         $('#next-btn').prop('disabled', true);
         return;
       }
-      $('tbody').html(displayContent);
     },
     error: function (error) {
       alert('An error ocurred');
