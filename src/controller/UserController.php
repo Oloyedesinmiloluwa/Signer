@@ -33,18 +33,20 @@ class UserController
     }
     public static function updateStatus($id = null, $status = null)
     {
-        if (!isset($_POST["delete-user-$id"])) {
-            return;
-        }
+        // if (!isset($_POST["delete-user-$id"])) {
+        //     return;
+        // }
         $statusToInt = (int) $status;
         $query= 'UPDATE user set status=:status WHERE id=:id';
         $db= new Database();
         $db->prepare($query);
         $db->stmt->bindValue(':id', $id);
-        $db->stmt->bindValue(':status', (int) $statusToInt);
+        $db->stmt->bindValue(':status', $statusToInt);
         $db->stmt->execute();
-        $db->stmt->rowCount();
-        header('location: users.php');
+        $i = $db->stmt->rowCount();
+        $i = $db->stmt->rowCount();
+        return $db->stmt->rowCount();
+        // header('location: users.php');
     }
 
     public static function fetchAllUser()

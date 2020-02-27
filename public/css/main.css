@@ -47,8 +47,8 @@ ul.country {
 }
 
 div.reset-password-wrapper{
-    margin: 4%;
-
+    margin: 3%;
+    display: none;
 }
 .reset-password-wrapper ul {
   list-style-type: none;
@@ -366,6 +366,8 @@ border-radius: 9px;
   font-size: 120%;
 }
 .close {
+  position: relative;
+  right: -50px;
   float: right;
   font-size: 250%;
   font-weight: bold;
@@ -750,6 +752,9 @@ button.delete-btn, button.display-state {
   background: #15437F;
   color: white;
   padding: 5px;
+}
+button.delete-btn:disabled, button.delete-btn:disabled:hover {
+  background: grey;
 }
 button.delete-btn:hover, button.display-state:hover{
   /* box-shadow: #0B2240 5px 0px 4px 4px; */
