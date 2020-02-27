@@ -29,6 +29,7 @@ if (isset($_POST['reset-password-btn'])) {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="./css/main.css" rel="stylesheet" />
 <link href="./css/normalize.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 <nav role="navigation" class="navContainer">
@@ -73,15 +74,18 @@ if (isset($_POST['reset-password-btn'])) {
          <td><?php echo($user->email) ?></td>
          <td><?php echo($user->status ? 'Enabled': 'Disabled') ?></td>
          <td>
-           <form name="<?php echo $user->id?>" method="POST" action="<?php UserController::updateStatus($user->id, !$user->status)?>">
-           <button class="delete-btn" name="<?php echo "delete-user-$user->id"?>" type="submit"><?php echo($user->status ? 'Disable': 'Enable') ?></button>
-           </form>
+           <!-- <form name="<?php echo $user->id?>" method="POST" action=""> -->
+           <button <?php echo $user->id !== json_decode($_SESSION['userData'],true)['id'] ? "disabled" : null ?> class="delete-btn" name="<?php echo "delete-user-$user->id"?>" type="submit"><?php echo($user->status ? 'Disable': 'Enable') ?></button>
+           <!-- </form> -->
        </tr>
             <?php }
         };
         ?>
     </tbody>
   </table>
+  <a href="confirmation.php" title="link to confirmation page">Here </a>
+  <button class="delete-btn-new" name="<?php echo "delete-user-$user->id"?>" type="submit"><?php echo($user->status ? 'Disable': 'Enable') ?></button>
+
   <div class="hr"></div>
   <div class="reset-password-wrapper">
   <h2>Reset your password</h2>
@@ -111,5 +115,35 @@ if (isset($_POST['reset-password-btn'])) {
   </ul>
   </form>
 </div>
+<div class="modal">
+        <div class="modal-content clearfix">
+            <div class="close">&times;</div>
+            <h4>Enable Account</h4>
+            <p>Are you sure you want to pay $50 to enable your account ?</p>
+           <div class="email-container">
+          <!-- <ul class="modal-display">
+            Please wait...
+          </ul> -->
+            <!-- <form method="POST" action=""> -->
+          </div>
+              <!-- <button id="modal-btn" type="submit">Close</button>
+            </form> -->
+            <form method="POST" action="https://www.sandbox.paypal.com/cgi-bin/webscr">
+    <input type="hidden" name="business" value="sinmiloluwasunday-facilitator@gmail.com">
+    <input type="hidden" name="cmd" value="_xclick">
+
+    <input type="hidden" name="item_name" value="Regular Membership">
+    <input type="hidden" name="amount" value="50">
+    <input type="hidden" name="currency_code" value="USD">
+
+    <input type="image" id="modal-btn" name="submit" border="0"
+  src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"
+  alt="Buy Now" />
+  <img alt="" border="0" width="1" height="1"
+  src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
+  </form>
+      </div>
+    </div>
 </body>
+<script src="users.js"></script>
 </html>
